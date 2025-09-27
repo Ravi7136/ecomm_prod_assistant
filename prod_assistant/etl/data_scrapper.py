@@ -3,8 +3,7 @@ import time
 import re
 import os
 from bs4 import BeautifulSoup
-# import undetected_chromedriver as uc
-import nodriver as uc
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -23,6 +22,7 @@ class FlipkartScraper:
         driver = uc.Chrome(options=options,use_subprocess=True)
 
         if not product_url.startswith("http"):
+            driver.quit()
             return "No reviews found"
 
         try:
@@ -113,4 +113,3 @@ class FlipkartScraper:
             writer = csv.writer(f)
             writer.writerow(["product_id", "product_title", "rating", "total_reviews", "price", "top_reviews"])
             writer.writerows(data)
-        
